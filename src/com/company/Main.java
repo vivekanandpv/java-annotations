@@ -1,26 +1,20 @@
 package com.company;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 
 public class Main {
 
-    public static void main(String[] args) throws NoSuchMethodException, NoSuchFieldException {
-        Sample sample = new Sample();
-        Class type = sample.getClass();
-        Method fooMethod = sample.getClass().getMethod("foo");
-        Field idField = sample.getClass().getDeclaredField("id");   //  getField() is for public fields
+    public static void main(String[] args) throws NoSuchMethodException, NoSuchFieldException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        //  Find the class Sample
+        Constructor<Sample> sampleConstructor = Sample.class.getConstructor(Long.TYPE); //  for primitives .class doesn't work
 
-        //  for types (class, interface, and enums) cast is required
-        Premium typeAnnotation = (Premium) type.getAnnotation(Premium.class);
-        System.out.println("Type: Price: " + typeAnnotation.price() + "; tag: " + typeAnnotation.tag());
+        //  Get the annotation instance
+        Premium constructorAnnotation = sampleConstructor.getAnnotation(Premium.class);
 
+        //  Invoke the constructor with value passed through annotation
+        Sample sampleInstance = sampleConstructor.newInstance(constructorAnnotation.id());
 
-        //  for methods and fields the cast is not required
-        Premium fooAnnotation = fooMethod.getAnnotation(Premium.class);
-        System.out.println("Method: message: " + fooAnnotation.message());
-
-        Premium idAnnotation = idField.getAnnotation(Premium.class);
-        System.out.println("Field: message: " + idAnnotation.message());
+        //  Inspect
+        System.out.println("Id of the instance: " + sampleInstance.getId());
     }
 }
