@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 //  Target specifies where this annotation can be useful
-@Target(ElementType.TYPE)   //  to classes, interfaces, and enums
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})   //  to classes, interfaces, and enums
 // for multiple specifications use @Target({ElementType.TYPE, ElementType.METHOD})
 
 //  Retention specifies how deep this annotation is available
@@ -17,4 +17,5 @@ public @interface Premium {
     //  declaring annotation parameters
     int price() default 100;
     String tag() default "Default";
+    String message() default "";
 }
