@@ -10,8 +10,9 @@ import java.lang.annotation.Target;
 // for multiple specifications use @Target({ElementType.TYPE, ElementType.METHOD})
 
 //  Retention specifies how deep this annotation is available
-@Retention(RetentionPolicy.CLASS)   //  bytecode deep;
-// others: SOURCE (stripped in bytecode), RUNTIME (even JVM can see, as deep as possible)
+@Retention(RetentionPolicy.RUNTIME)   //  JVM deep;
+// SOURCE (stripped in compilation),
+// CLASS (available to compiler but not to runtime)
 public @interface Premium {
     //  declaring annotation parameters
     int price() default 100;
